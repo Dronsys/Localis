@@ -1,4 +1,4 @@
-<p align="right"><a href="README.md">English</a> | <a href="README_RU.md">Русский</a></p>
+<p align="right"><a href="README.md">English</a> | <a href="README_RU.md">Русский</a></p> | <a href="README_CH.md">中文</a></p>
 
 # Localis
 
