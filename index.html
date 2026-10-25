@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Localis - Modpack Localization Suite</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="blueprint-grid"></div>
+  <div class="spotlight-halo"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="logo-mark">Localis</span>
+        <span class="logo-sub" id="lbl-subtitle">Modpack Localization Suite</span>
+      </div>
+      <div class="header-actions">
+        <select id="lang-select" class="glass-select" onchange="changeLanguage(this.value)">
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="zh">中文</option>
+        </select>
+        <button class="pill-btn outlined" onclick="openNotificationsModal()"><i class="fa-solid fa-bell"></i> <span id="nav-notif">Уведомления</span> <span id="notif-badge" class="badge" style="display:none; background: #f38ba8; color: #11111b; border-radius: 99px; padding: 2px 6px; font-size: 10px; font-weight: bold;">0</span></button>
+        <button class="pill-btn outlined" onclick="openTerminologyModal()"><i class="fa-solid fa-book"></i> <span id="nav-term">Терминология</span></button>
+        <button class="pill-btn outlined" onclick="openAISettingsModal()"><i class="fa-solid fa-gear"></i> <span id="nav-settings">Настройки ИИ</span></button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Top Control Bar -->
+      <section class="control-card glass-card">
+        <div class="eyebrow" id="eyebrow-title"></div>
+        <h1 class="hero-heading" id="hero-title">Пакетный Редактор Модов</h1>
+        
+        <div class="path-row">
+          <input type="text" id="mod-path-input" class="glass-input" placeholder="Путь к папке с модами (.jar)..." readonly>
+          <button class="pill-btn outlined" onclick="selectFolder()"><i class="fa-solid fa-folder-open"></i> <span id="btn-browse">Выбрать папку</span></button>
+          <button class="pill-btn primary" onclick="startAnalysis()"><i class="fa-solid fa-rocket"></i> <span id="btn-analyze">Анализировать</span></button>
+          <button class="pill-btn violet-cta" onclick="batchTranslateAll()"><i class="fa-solid fa-robot"></i> <span id="btn-batch">Перевести все</span></button>
+          <button class="pill-btn outlined" onclick="exportHtmlReport()"><i class="fa-solid fa-file-arrow-down"></i> <span id="btn-export">Экспорт HTML</span></button>
+        </div>
+
+        <div class="status-row">
+          <span id="status-text" class="status-msg">Ожидание выбора папки с модами...</span>
+          <span id="total-percent" class="status-percent">Общий прогресс: 0.0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+        </div>
+        
+        <!-- AI Translation Progress Panel -->
+        <div id="ai-progress-panel" style="display: none; margin-top: 15px; padding: 12px; background: rgba(102, 58, 243, 0.1); border: 1px solid rgba(102, 58, 243, 0.3); border-radius: 8px;">
+          <div class="status-row" style="margin-bottom: 6px;">
+            <span id="ai-progress-title" style="font-weight: 600; color: var(--color-ice-highlight);"><i class="fa-solid fa-robot"></i> ИИ Перевод...</span>
+            <span id="ai-progress-percent" style="font-weight: 600; color: #a6e3a1;">0%</span>
+          </div>
+          <div class="progress-bar-container" style="height: 8px;">
+            <div id="ai-progress-fill" class="progress-fill" style="width: 0%; background: linear-gradient(90deg, #663af3, #a6e3a1);"></div>
+          </div>
+          <div id="ai-progress-detail" style="font-size: 11px; color: var(--color-fog-veil); margin-top: 6px;">Строк: 0 / 0 | Часть 0/0</div>
+        </div>
+      </section>
+
+      <!-- Results Grid -->
+      <div class="results-grid">
+        <!-- Column 1: Partial -->
+        <div class="glass-card column-card">
+          <div class="col-header">
+            <h3 id="col1-title">⚠️ Требуется доработка (0)</h3>
+            <button class="pill-btn outlined sm" onclick="openEditorTab('partial')"><i class="fa-solid fa-pen-to-square"></i> <span id="btn-edit-part">Открыть</span></button>
+          </div>
+          <div class="list-container" id="list-partial"></div>
+        </div>
+
+        <!-- Column 2: Not Translated -->
+        <div class="glass-card column-card">
+          <div class="col-header">
+            <h3 id="col2-title">❌ Совсем не переведено (0)</h3>
+            <button class="pill-btn outlined sm" onclick="openEditorTab('not_translated')"><i class="fa-solid fa-pen-to-square"></i> <span id="btn-edit-not">Открыть</span></button>
+          </div>
+          <div class="list-container" id="list-not-translated"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Terminology Modal -->
+  <div id="modal-term" class="modal-backdrop" style="display: none;">
+    <div class="modal-card glass-card term-modal-responsive">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-book"></i> <span id="term-modal-title">Правила терминологии</span></h3>
+        <button class="close-btn" onclick="closeModal('modal-term')">&times;</button>
+      </div>
+      <p class="modal-desc" id="term-desc">Задайте правила перевода для конкретных терминов (например: Ingot -> Слиток).</p>
+      <div class="term-inputs">
+        <input type="text" id="term-key" class="glass-input" placeholder="EN Термин (напр. Netherite)">
+        <input type="text" id="term-val" class="glass-input" placeholder="Перевод (напр. Незерит)">
+        <button class="pill-btn primary" onclick="addTermRule()"><i class="fa-solid fa-plus"></i> <span id="term-add-btn">Добавить</span></button>
+      </div>
+      <div class="term-list-container" id="term-list"></div>
+      <div class="modal-footer">
+        <button class="pill-btn violet-cta" onclick="saveTerminology()"><i class="fa-solid fa-floppy-disk"></i> <span id="term-save-btn">Сохранить</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Settings Modal -->
+  <div id="modal-ai" class="modal-backdrop" style="display: none;">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear"></i> <span id="ai-modal-title">Настройки ИИ Провайдера</span></h3>
+        <button class="close-btn" onclick="closeModal('modal-ai')">&times;</button>
+      </div>
+
+      <!-- Mode Switcher Buttons -->
+      <div class="mode-switch-row">
+        <button class="pill-btn sm outlined active" id="btn-ai-mode-cloud" onclick="switchAIMode('cloud')"><i class="fa-solid fa-cloud"></i> Cloud</button>
+        <button class="pill-btn sm outlined" id="btn-ai-mode-ollama" onclick="switchAIMode('ollama')"><i class="fa-solid fa-server"></i> Ollama</button>
+      </div>
+
+      <!-- Cloud Config Panel -->
+      <div id="ai-panel-cloud" class="ai-config-panel">
+        <div class="form-group">
+          <label id="lbl-ai-name">Provider Name</label>
+          <input type="text" id="ai-cloud-name" class="glass-input" value="OpenAI">
+        </div>
+        <div class="form-group">
+          <label>Base URL</label>
+          <input type="text" id="ai-cloud-base-url" class="glass-input" value="https://api.openai.com/v1">
+        </div>
+        <div class="form-group">
+          <label>URL Models</label>
+          <input type="text" id="ai-cloud-models-url" class="glass-input" value="https://api.openai.com/v1/models">
+        </div>
+        <div class="form-group">
+          <label id="lbl-ai-key">API Key</label>
+          <input type="password" id="ai-cloud-key" class="glass-input" placeholder="sk-...">
+        </div>
+        <div class="form-group">
+          <label id="lbl-ai-models">Доступные модели</label>
+          <div class="model-fetch-row">
+            <button class="pill-btn sm primary" onclick="fetchCloudModels()"><i class="fa-solid fa-arrows-rotate"></i> <span id="btn-fetch-models">Получить модели</span></button>
+            <select id="ai-cloud-model-select" class="glass-select flex-1"></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ollama Config Panel -->
+      <div id="ai-panel-ollama" class="ai-config-panel" style="display: none;">
+        <div class="form-group">
+          <label>Provider Name</label>
+          <input type="text" id="ai-ollama-name" class="glass-input" value="Ollama">
+        </div>
+        <div class="form-group">
+          <label>Base URL</label>
+          <input type="text" id="ai-ollama-base-url" class="glass-input" value="http://127.0.0.1:11434/v1">
+        </div>
+        <div class="form-group">
+          <label>URL Models</label>
+          <input type="text" id="ai-ollama-models-url" class="glass-input" value="http://127.0.0.1:11434/v1/models">
+        </div>
+        <div class="form-group">
+          <label id="lbl-ollama-models">Локальные модели Ollama</label>
+          <div class="model-fetch-row">
+            <button class="pill-btn sm primary" onclick="fetchOllamaModels()"><i class="fa-solid fa-arrows-rotate"></i> <span id="btn-fetch-ollama">Получить модели</span></button>
+            <select id="ai-ollama-model-select" class="glass-select flex-1"></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="pill-btn violet-cta" onclick="saveAISettings()"><i class="fa-solid fa-floppy-disk"></i> <span id="ai-save-btn">Сохранить</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backup Manager Modal -->
+  <div id="modal-backups" class="modal-backdrop" style="display: none; z-index: 200;">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> <span id="backup-modal-title">Резервные копии</span></h3>
+        <button class="close-btn" onclick="closeModal('modal-backups')">&times;</button>
+      </div>
+      <p class="modal-desc" id="backup-modal-desc">Список бэкапов для текущего мода:</p>
+      <div class="term-list-container" id="backup-list"></div>
+      <div class="modal-footer">
+        <button class="pill-btn outlined" onclick="closeModal('modal-backups')"><span id="btn-close-backup">Закрыть</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mod Editor Modal -->
+  <div id="modal-editor" class="modal-backdrop" style="display: none; z-index: 100;">
+    <div class="modal-card glass-card editor-modal-wide">
+      <div class="modal-header">
+        <div class="editor-header-left">
+          <h3 id="editor-mod-title">Редактор мода</h3>
+          <select id="editor-mod-select" class="glass-select sm" onchange="switchMod(this.value)"></select>
+          <span style="font-size: 13px; color: var(--color-moon-mist); font-weight: 500;">Mod ID:</span>
+          <select id="mod-id-select" class="glass-select sm" onchange="switchModId(this.value)"></select>
+        </div>
+        <div class="editor-view-switch">
+          <button class="pill-btn sm outlined active" id="btn-view-table" onclick="setEditorView('table')"><i class="fa-solid fa-table"></i> <span id="lbl-btn-table">Таблица</span></button>
+          <button class="pill-btn sm outlined" id="btn-view-json" onclick="setEditorView('json')"><i class="fa-solid fa-code"></i> <span id="lbl-btn-json">JSON</span></button>
+        </div>
+        <button class="close-btn" onclick="closeModal('modal-editor')">&times;</button>
+      </div>
+
+      <div class="editor-body">
+        <!-- Table View -->
+        <div id="view-table-container" class="view-pane">
+          <div class="table-toolbar">
+            <input type="text" id="table-search" class="glass-input sm" placeholder="Поиск по ключам и переводу..." oninput="filterTableData()">
+            <select class="glass-select sm" id="editor-filter-mode" onchange="filterTableData()">
+              <option value="all" id="opt-filter-all">Показывать все</option>
+              <option value="untranslated" id="opt-filter-untranslated">Только непереведенные</option>
+              <option value="errors" id="opt-filter-errors">Только с ошибками плейсхолдеров</option>
+            </select>
+            <button class="pill-btn sm primary" onclick="runAiTranslateCurrentMod()"><i class="fa-solid fa-robot"></i> <span id="btn-ai-trans-mod">ИИ Перевод мода</span></button>
+          </div>
+          <div class="table-wrapper">
+            <table class="glass-table" id="mod-datagrid">
+              <thead>
+                <tr>
+                  <th style="width: 35%;">Ключ (Key)</th>
+                  <th style="width: 35%;">Оригинал (EN)</th>
+                  <th style="width: 30%;" id="th-target-lang">Перевод</th>
+                </tr>
+              </thead>
+              <tbody id="datagrid-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- JSON View -->
+        <div id="view-json-container" class="view-pane" style="display: none;">
+          <div class="json-split">
+            <div class="json-box">
+              <label>Исходный (en_us.json)</label>
+              <textarea id="json-en-area" class="glass-textarea" readonly></textarea>
+            </div>
+            <div class="json-box">
+              <label id="lbl-json-target-title">Целевой перевод</label>
+              <textarea id="json-ru-area" class="glass-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer editor-footer">
+        <button class="pill-btn outlined" onclick="openBackupManager()"><i class="fa-solid fa-clock-rotate-left"></i> <span id="btn-backup-mgr">Бэкапы</span></button>
+        <button class="pill-btn violet-cta" onclick="saveCurrentModChanges()"><i class="fa-solid fa-floppy-disk"></i> <span id="btn-save-jar">Сохранить в JAR</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+
+
+  <!-- Localized result and error dialog -->
+  <div id="modal-app-dialog" class="modal-backdrop" style="display:none; z-index:270;">
+    <div class="modal-card glass-card app-dialog-card" role="dialog" aria-modal="true" aria-labelledby="app-dialog-title">
+      <div class="modal-header"><h3 id="app-dialog-title">Localis</h3><button class="close-btn" onclick="closeAppDialog()">&times;</button></div>
+      <p id="app-dialog-message" class="modal-desc"></p>
+      <div class="modal-footer"><button id="app-dialog-ok" class="pill-btn primary" onclick="closeAppDialog()">OK</button></div>
+    </div>
+  </div>
+
+  <!-- AI Translation Progress Modal -->
+  <div id="modal-ai-progress" class="modal-backdrop" style="display:none; z-index:250;">
+    <div class="modal-card glass-card">
+      <div class="modal-header"><h3 id="ai-progress-modal-heading">ИИ Перевод</h3><button class="pill-btn sm outlined" id="btn-ai-progress-minimize" onclick="minimizeAIProgress()">Свернуть</button></div>
+      <p id="ai-progress-summary" class="modal-desc"></p>
+      <p id="ai-progress-current" class="modal-desc"></p>
+      <div class="progress-bar-container"><div id="ai-progress-modal-fill" class="progress-fill" style="width:0%;"></div></div>
+      <p id="ai-progress-counts" class="modal-desc"></p>
+    </div>
+  </div>
+
+  <!-- Notifications Modal -->
+  <div id="modal-notif" class="modal-backdrop" style="display: none; z-index: 220;">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-bell"></i> <span id="notif-modal-title">Центр Уведомлений</span></h3>
+        <button class="close-btn" onclick="closeModal('modal-notif')">&times;</button>
+      </div>
+      <p class="modal-desc" id="notif-modal-desc">История системных событий и операций ИИ:</p>
+      <div class="term-list-container" id="notif-list" style="max-height: 350px;"></div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button class="pill-btn outlined" onclick="clearNotifications()"><i class="fa-solid fa-trash"></i> <span id="btn-clear-notif">Очистить</span></button>
+        <button class="pill-btn primary" onclick="closeModal('modal-notif')"><span id="btn-close-notif">Закрыть</span></button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

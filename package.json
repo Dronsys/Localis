@@ -1,0 +1,58 @@
+{
+  "name": "localis",
+  "version": "1.0.0",
+  "description": "Localis - Advanced Minecraft Modpack Localization Tool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "productName": "Localis",
+  "build": {
+    "appId": "com.localis.modpacklocalization",
+    "productName": "Localis",
+    "asar": true,
+    "files": [
+      "**/*",
+      "!README.md",
+      "!DESIGN.md",
+      "!*.rar",
+      "!*.lsyst",
+      "!logs.lsyst",
+      "!test.lsyst",
+      "!app.py",
+      "!lsyst_crypt.py",
+      "!.idea/**"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/localis.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "Localis-Setup-${version}.${ext}"
+    }
+  }
+}
