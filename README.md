@@ -24,7 +24,7 @@ You can also use a packaged Windows installer; Node.js is not needed to run an i
 ## Run from source
 
 ```bash
-git clone https://github.com/Dronsys/Localis
+git clone https://github.com/FoxSoul-dev/Localis
 cd Localis
 npm install
 npm start
