@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist:win": "electron-builder --win nsis"
+    "dist:win": "electron-builder --win nsis --x64 --arm64",
+    "dist:linux": "electron-builder --linux AppImage deb rpm pacman --x64",
+    "dist:mac": "electron-builder --mac dmg --x64 --arm64"
   },
   "dependencies": {
     "jszip": "^3.10.1"
@@ -15,6 +17,8 @@
     "electron-builder": "^26.18.0",
     "electron-reload": "^2.0.0-alpha.1"
   },
+  "license": "MIT",
+  "author": "FoxSoul",
   "productName": "Localis",
   "build": {
     "appId": "com.localis.modpacklocalization",
@@ -41,18 +45,63 @@
         {
           "target": "nsis",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ],
       "icon": "assets/localis.ico"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/localis.icns"
+    },
+    "linux": {
+      "artifactName": "Localis-${version}-${arch}.${ext}",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "pacman",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/localis-icon.png",
+      "category": "Utility",
+      "maintainer": "FoxSoul"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "artifactName": "Localis-Setup-${version}.${ext}"
+      "artifactName": "Localis-Setup-${version}-${arch}.${ext}"
     }
   }
 }

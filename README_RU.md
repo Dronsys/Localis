@@ -36,7 +36,16 @@ npm start
 npm run dist:win
 ```
 
-Установщик будет создан в папке `dist/`.
+Сборка пакетов для остальных платформ выполняется на соответствующих агентах GitHub Actions:
+
+```bash
+npm run dist:mac    # DMG для Intel и Apple Silicon (требуется macOS)
+npm run dist:linux  # AppImage, DEB, RPM и пакет pacman
+```
+
+Сборка Windows включает установщики x64 и ARM64. Результаты локальной сборки сохраняются в `dist/`. Отправка тега вида `v*` запускает кроссплатформенную сборку и публикует созданные пакеты в GitHub Release. Пакеты macOS не подписаны и не нотарифицированы, поэтому при первом запуске macOS может запросить подтверждение.
+
+Рецепт AUR для Arch Linux (`localis-bin`) находится в [`packaging/aur/PKGBUILD`](packaging/aur/PKGBUILD). Он устанавливает AppImage из соответствующего GitHub Release.
 
 ## Начало работы
 

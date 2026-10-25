@@ -36,7 +36,16 @@ To build a Windows installer:
 npm run dist:win
 ```
 
-The installer is written to the `dist/` directory.
+To build the release packages on their corresponding GitHub Actions runners:
+
+```bash
+npm run dist:mac    # Intel and Apple Silicon DMG files (requires macOS)
+npm run dist:linux  # AppImage, DEB, RPM, and pacman package
+```
+
+Windows builds include x64 and ARM64 installers. All local build outputs are written to `dist/`. Pushing a `v*` tag starts the cross-platform workflow and publishes the generated packages as a GitHub Release. macOS packages are not code-signed or notarized, so macOS may require users to approve the first launch.
+
+The Arch Linux `localis-bin` AUR recipe is in [`packaging/aur/PKGBUILD`](packaging/aur/PKGBUILD). It uses the AppImage attached to the matching GitHub Release.
 
 ## Getting started
 

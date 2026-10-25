@@ -1,0 +1,43 @@
+# Maintainer: FoxSoul
+pkgname=localis-bin
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Desktop application for analyzing and translating Minecraft mods with AI"
+arch=('x86_64')
+url="https://github.com/Dronsys/Localis"
+license=('MIT')
+depends=('fuse2')
+provides=('localis')
+conflicts=('localis')
+options=('!strip')
+_release="https://github.com/Dronsys/Localis/releases/download/v${pkgver}"
+source=(
+  "Localis-${pkgver}-x64.AppImage::${_release}/Localis-${pkgver}-x64.AppImage"
+  "localis-icon.png::https://raw.githubusercontent.com/Dronsys/Localis/v${pkgver}/assets/localis-icon.png"
+  "LICENSE::https://raw.githubusercontent.com/Dronsys/Localis/v${pkgver}/LICENSE"
+)
+sha256sums=(
+  'SKIP'
+  'e05e3d4e167dc33df27bedea9f9e2c03ada722ff63ba53bd8505935ce0bc2469'
+  'b9c18e131db6fee19784cc70db85314dabd0d3ee3be1a94adec25143ca1c46c9'
+)
+
+package() {
+  install -Dm755 "${srcdir}/Localis-${pkgver}-x64.AppImage" \
+    "${pkgdir}/opt/localis/Localis.AppImage"
+  install -Dm644 "${srcdir}/localis-icon.png" \
+    "${pkgdir}/usr/share/pixmaps/localis.png"
+  install -Dm644 "${srcdir}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -dm755 "${pkgdir}/usr/share/applications"
+  cat > "${pkgdir}/usr/share/applications/localis.desktop" <<'DESKTOP'
+[Desktop Entry]
+Name=Localis
+Comment=Analyze and translate Minecraft mods
+Exec=/opt/localis/Localis.AppImage %U
+Icon=localis
+Terminal=false
+Type=Application
+Categories=Utility;
+DESKTOP
+}
