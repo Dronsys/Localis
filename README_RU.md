@@ -24,7 +24,7 @@
 ## Запуск из исходного кода
 
 ```bash
-git clone https://github.com/Dronsys/Localis
+git clone https://github.com/FoxSoul-dev/Localis
 cd Localis
 npm install
 npm start
