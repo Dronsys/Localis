@@ -12,7 +12,7 @@ conflicts=('localis')
 options=('!strip')
 _release="https://github.com/Dronsys/Localis/releases/download/v${pkgver}"
 source=(
-  "Localis-${pkgver}-x64.AppImage::${_release}/Localis-${pkgver}-x64.AppImage"
+  "Linux-x86_64-Localis-${pkgver}.AppImage::${_release}/Linux-x86_64-Localis-${pkgver}.AppImage"
   "localis-icon.png::https://raw.githubusercontent.com/Dronsys/Localis/v${pkgver}/assets/localis-icon.png"
   "LICENSE::https://raw.githubusercontent.com/Dronsys/Localis/v${pkgver}/LICENSE"
 )
@@ -23,7 +23,7 @@ sha256sums=(
 )
 
 package() {
-  install -Dm755 "${srcdir}/Localis-${pkgver}-x64.AppImage" \
+  install -Dm755 "${srcdir}/Linux-x86_64-Localis-${pkgver}.AppImage" \
     "${pkgdir}/opt/localis/Localis.AppImage"
   install -Dm644 "${srcdir}/localis-icon.png" \
     "${pkgdir}/usr/share/pixmaps/localis.png"

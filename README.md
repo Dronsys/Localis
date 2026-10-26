@@ -4,6 +4,35 @@
 
 **Localis** is a desktop application for analyzing and translating Minecraft mods. It helps you inspect mod language files, edit translations, use AI providers for translation, and review localization coverage in an HTML report.
 
+## Download Localis 1.0.0
+
+| Platform | Downloads |
+| --- | --- |
+| Windows | [![Setup x64](https://img.shields.io/badge/Setup-x64-0078D4?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Windows-x64-Localis-Setup-1.0.0.exe)<br>[![Portable x64](https://img.shields.io/badge/Portable-x64-2D7D9A?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/win-unpacked.zip) |
+| macOS | [![Apple Silicon](https://img.shields.io/badge/DMG-Apple%20Silicon-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-Silicon-Localis-1.0.0-arm64.dmg)<br>[![Intel x64](https://img.shields.io/badge/DMG-Intel%20x64-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-intel-Localis-1.0.0.dmg) |
+| Linux | [![AppImage x86_64](https://img.shields.io/badge/AppImage-x86__64-F2A900?logo=linux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.AppImage)<br>[![DEB amd64](https://img.shields.io/badge/DEB-amd64-A81D33?logo=debian)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-amd64-Localis-1.0.0.deb)<br>[![RPM x86_64](https://img.shields.io/badge/RPM-x86__64-EE0000?logo=redhat)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.rpm)<br>[![pacman x64](https://img.shields.io/badge/pacman-x64-1793D1?logo=archlinux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x64-Localis-1.0.0.pacman)<br>[![AUR recipe](https://img.shields.io/badge/AUR-PKGBUILD-1793D1?logo=archlinux)](packaging/aur/PKGBUILD) |
+
+Windows ARM64 installer is not included in version 1.0.0 yet. See [all release files](https://github.com/FoxSoul-dev/Localis/releases/tag/v1.0.0).
+
+## Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/dashboard-en.png" alt="Localis main screen" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/editor-en.png" alt="Mod translation editor" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/ai-settings-en.png" alt="AI and Ollama settings" width="49%">
+  <img src="assets/screenshots/ai-progress-en.png" alt="AI translation progress" width="49%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/notifications-en.png" alt="Translation status in notifications" width="49%">
+</p>
+
 ## Features
 
 - Scan Minecraft mod `.jar` files and locate language resources.

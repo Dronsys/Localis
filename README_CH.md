@@ -4,6 +4,35 @@
 
 **Localis** 是一款用于分析和翻译 Minecraft Mod 的桌面应用程序。它可以帮助您检查 Mod 语言文件、编辑翻译、使用 AI 服务提供商进行自动翻译，并在 HTML 报告中查看本地化覆盖率。
 
+## 下载 Localis 1.0.0
+
+| 平台 | 下载 |
+| --- | --- |
+| Windows | [![Setup x64](https://img.shields.io/badge/Setup-x64-0078D4?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Windows-x64-Localis-Setup-1.0.0.exe)<br>[![Portable x64](https://img.shields.io/badge/Portable-x64-2D7D9A?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/win-unpacked.zip) |
+| macOS | [![Apple Silicon](https://img.shields.io/badge/DMG-Apple%20Silicon-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-Silicon-Localis-1.0.0-arm64.dmg)<br>[![Intel x64](https://img.shields.io/badge/DMG-Intel%20x64-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-intel-Localis-1.0.0.dmg) |
+| Linux | [![AppImage x86_64](https://img.shields.io/badge/AppImage-x86__64-F2A900?logo=linux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.AppImage)<br>[![DEB amd64](https://img.shields.io/badge/DEB-amd64-A81D33?logo=debian)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-amd64-Localis-1.0.0.deb)<br>[![RPM x86_64](https://img.shields.io/badge/RPM-x86__64-EE0000?logo=redhat)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.rpm)<br>[![pacman x64](https://img.shields.io/badge/pacman-x64-1793D1?logo=archlinux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x64-Localis-1.0.0.pacman)<br>[![AUR recipe](https://img.shields.io/badge/AUR-PKGBUILD-1793D1?logo=archlinux)](packaging/aur/PKGBUILD) |
+
+Windows ARM64 installer is not included in version 1.0.0 yet. See [all release files](https://github.com/FoxSoul-dev/Localis/releases/tag/v1.0.0).
+
+## 软件截图
+
+<p align="center">
+  <img src="assets/screenshots/dashboard-en.png" alt="Localis 主界面" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/editor-en.png" alt="Mod 翻译编辑器" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/ai-settings-en.png" alt="AI 和 Ollama 设置" width="49%">
+  <img src="assets/screenshots/ai-progress-en.png" alt="AI 翻译进度" width="49%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/notifications-en.png" alt="通知中的翻译状态" width="49%">
+</p>
+
 ## 功能特性
 
 - 扫描 Minecraft Mod 的 `.jar` 文件并定位语言资源。

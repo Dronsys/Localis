@@ -4,6 +4,34 @@
 
 **Localis** — настольная программа для анализа и перевода Minecraft-модов. Она помогает находить языковые файлы, редактировать переводы, переводить текст с помощью ИИ и проверять состояние локализации в HTML-отчёте.
 
+## Скачать Localis 1.0.0
+
+| Платформа | Загрузки |
+| --- | --- |
+| Windows | [![Установщик x64](https://img.shields.io/badge/Установщик-x64-0078D4?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Windows-x64-Localis-Setup-1.0.0.exe)<br>[![Portable x64](https://img.shields.io/badge/Portable-x64-2D7D9A?logo=windows)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/win-unpacked.zip) |
+| macOS | [![Apple Silicon](https://img.shields.io/badge/DMG-Apple%20Silicon-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-Silicon-Localis-1.0.0-arm64.dmg)<br>[![Intel x64](https://img.shields.io/badge/DMG-Intel%20x64-000000?logo=apple)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/MacOS-intel-Localis-1.0.0.dmg) |
+| Linux | [![AppImage x86_64](https://img.shields.io/badge/AppImage-x86__64-F2A900?logo=linux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.AppImage)<br>[![DEB amd64](https://img.shields.io/badge/DEB-amd64-A81D33?logo=debian)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-amd64-Localis-1.0.0.deb)<br>[![RPM x86_64](https://img.shields.io/badge/RPM-x86__64-EE0000?logo=redhat)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x86_64-Localis-1.0.0.rpm)<br>[![pacman x64](https://img.shields.io/badge/pacman-x64-1793D1?logo=archlinux)](https://github.com/FoxSoul-dev/Localis/releases/download/v1.0.0/Linux-x64-Localis-1.0.0.pacman)<br>[![Рецепт AUR](https://img.shields.io/badge/AUR-PKGBUILD-1793D1?logo=archlinux)](packaging/aur/PKGBUILD) |
+
+Установщик Windows ARM64 пока не входит в версию 1.0.0. Все файлы доступны на странице [релиза](https://github.com/FoxSoul-dev/Localis/releases/tag/v1.0.0).
+
+## Скриншоты
+
+<p align="center">
+  <img src="assets/screenshots/dashboard-ru.png" alt="Главный экран Localis" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/editor-ru.png" alt="Редактор переводов мода" width="100%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/ai-progress-ru.png" alt="Прогресс ИИ-перевода" width="75%">
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/notifications-ru.png" alt="Статус перевода в уведомлениях" width="49%">
+</p>
+
 ## Возможности
 
 - Сканирование `.jar`-файлов Minecraft-модов и поиск языковых ресурсов.
